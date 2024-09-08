@@ -9,10 +9,10 @@ uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_2gagl"]
 material = SubResource("ORMMaterial3D_lqh5r")
-size = Vector3(1, 5, 1)
+size = Vector3(2, 5, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bie8i"]
-size = Vector3(1, 5, 1)
+size = Vector3(2, 5, 2)
 
 [node name="MazeNode" type="MazeNode"]
 

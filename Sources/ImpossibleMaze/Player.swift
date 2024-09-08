@@ -7,17 +7,22 @@ public class Player: CharacterBody3D {
     
     var direction = Vector3()
     var moveVelocity = Vector3()
+    var isSprinting = false
     
     @Export
     public var gravity: Double = -24.8
+    
     @Export
-    public var maxSpeed: Double = 20
+    public var maxSpeed: Double = 40
     
     @Export
     public var jumpSpeed: Double = 18
     
     @Export
-    public var acceleration: Double = 10
+    public var acceleration: Double = 20
+    
+    @Export
+    public var sprintAcceleration: Double = 40
     
     @Export
     public var deceleration: Double = 16
@@ -30,8 +35,12 @@ public class Player: CharacterBody3D {
     
     @SceneTree(path: "Piviot/Camera")
     var camera: Camera3D?
+    
     @SceneTree(path: "Piviot")
     var piviot: Node3D?
+    
+    @SceneTree(path: "Piviot/Flashlight")
+    var flashlight: SpotLight3D?
     
     public override func _ready() {
         super._ready()
@@ -66,6 +75,12 @@ public class Player: CharacterBody3D {
             inputVector.x += 1
         }
         
+        isSprinting = Input.isActionPressed(action: "sprint")
+        
+        if Input.isActionJustPressed(action: "flashlight_toggle") {
+            flashlight?.visible.toggle()
+        }
+        
         inputVector = inputVector.normalized()
         
         direction = (cameraTransform.basis * Vector3(x: inputVector.x, y: 0, z: -inputVector.y)).normalized()
@@ -97,11 +112,7 @@ public class Player: CharacterBody3D {
         var target = direction
         target *= maxSpeed
         
-        let acceleration = if direction.dot(with: horiazontalVelocity) > 0 {
-            acceleration
-        } else {
-            deceleration
-        }
+        let acceleration = isSprinting ? sprintAcceleration : acceleration
         
         horiazontalVelocity = horiazontalVelocity.lerp(to: target, weight: acceleration * delta)
         velocity.x = horiazontalVelocity.x

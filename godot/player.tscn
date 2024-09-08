@@ -12,6 +12,10 @@ velocity = Vector3(0, -0.413333, 0)
 [node name="Piviot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5508, 0)
 
+[node name="Flashlight" type="SpotLight3D" parent="Piviot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16438, 0)
+visible = false
+
 [node name="Camera" type="Camera3D" parent="Piviot"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

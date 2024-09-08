@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bs3lhxj3gdyv3"]
+
+[ext_resource type="PackedScene" uid="uid://dvl383ispakmn" path="res://GUI/gui_panel_3d.tscn" id="1_3505y"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kskwb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2qtt"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_kskwb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.198182, 0.428333)
+mesh = SubResource("BoxMesh_h2qtt")
+
+[node name="GUIPanel3D" parent="MeshInstance3D/MeshInstance3D" instance=ExtResource("1_3505y")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0.101923)

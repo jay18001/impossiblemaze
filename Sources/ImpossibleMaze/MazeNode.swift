@@ -10,6 +10,9 @@ public class MazeNode: Node3D {
     @Export()
     public var height: Int = 33
     
+    @Export()
+    public var wallSize: Vector2 = Vector2(x: 2, y: 2)
+    
     lazy var maze: [[Int]] = Array(repeating: Array(repeating: 1, count: width), count: height)
     
     @Export()
@@ -49,7 +52,7 @@ public class MazeNode: Node3D {
             return
         }
         
-        newWall.position = Vector3(x: position.x, y: 0, z: position.y)
+        newWall.position = Vector3(x: position.x * wallSize.x, y: 0, z: position.y * wallSize.y)
         newWall.visible = true
         print(newWall.position)
         addChild(node: newWall)
