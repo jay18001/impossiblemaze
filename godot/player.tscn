@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyyslgmala3aq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3ynhw"]
+radius = 0.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mup4g"]
+radius = 0.25
+
+[node name="Player" type="Player"]
+velocity = Vector3(0, -0.413333, 0)
+
+[node name="Piviot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5508, 0)
+
+[node name="Camera" type="Camera3D" parent="Piviot"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_3ynhw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_mup4g")
+skeleton = NodePath("")

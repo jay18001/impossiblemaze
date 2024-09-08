@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cs4oc6nrt8mlb"]
+
+[ext_resource type="Texture2D" uid="uid://bljdnv06rv3pp" path="res://Textures/Prototype/blue 2.png" id="1_4rdwm"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_lqh5r"]
+albedo_texture = ExtResource("1_4rdwm")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_2gagl"]
+material = SubResource("ORMMaterial3D_lqh5r")
+size = Vector3(1, 5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bie8i"]
+size = Vector3(1, 5, 1)
+
+[node name="MazeNode" type="MazeNode"]
+
+[node name="PrototypeWall" type="StaticBody3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeWall"]
+mesh = SubResource("BoxMesh_2gagl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PrototypeWall"]
+shape = SubResource("BoxShape3D_bie8i")
