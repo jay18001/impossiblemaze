@@ -2,8 +2,8 @@ import Foundation
 //import SwiftGodot
 //import SwiftGodotKit
 import ImpossibleMaze
-import CoreGraphics
 #if canImport(UIKit)
+import CoreGraphics
 import UIKit
 #endif
 

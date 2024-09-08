@@ -9,10 +9,7 @@ web.release = "res://bin/libImpossibleMaze.dylib"
 
 macos.debug = "res://bin/libImpossibleMaze.dylib"
 macos.release = "res://bin/libImpossibleMaze.dylib"
-windows.debug.x86_32 = "res://bin/libImpossibleMaze.dylib"
-windows.release.x86_32 = "res://bin/libImpossibleMaze.dylib"
-windows.debug.x86_64 = "res://bin/libImpossibleMaze.dylib"
-windows.release.x86_64 = "res://bin/libImpossibleMaze.dylib"
+
 linux.debug.x86_64 = "res://bin/libImpossibleMaze.dylib"
 linux.release.x86_64 = "res://bin/libImpossibleMaze.dylib"
 linux.debug.arm64 = "res://bin/libImpossibleMaze.dylib"
@@ -23,3 +20,50 @@ android.debug.x86_64 = "res://bin/libImpossibleMaze.dylib"
 android.release.x86_64 = "res://bin/libImpossibleMaze.dylib"
 android.debug.arm64 = "res://bin/libImpossibleMaze.dylib"
 android.release.arm64 = "res://bin/libImpossibleMaze.dylib"
+
+windows.debug.x86_64 = "res://bin/ImpossibleMaze.dll"
+windows.release.x86_64 = "res://bin/ImpossibleMaze.dll"
+
+[dependencies]
+windows.debug = {
+    "res://bin/SwiftGodot.dll" : "",
+    "res://bin/BlocksRuntime.dll" : "",
+    "res://bin/dispatch.dll" : "",
+    "res://bin/Foundation.dll" : "",
+    "res://bin/FoundationNetworking.dll" : "",
+    "res://bin/FoundationXML.dll" : "",
+    "res://bin/swiftCore.dll" : "",
+    "res://bin/swiftCRT.dll" : "",
+    "res://bin/swiftDispatch.dll" : "",
+    "res://bin/swiftDistributed.dll" : "",
+    "res://bin/swiftObservation.dll" : "",
+    "res://bin/swiftRegexBuilder.dll" : "",
+    "res://bin/swiftRemoteMirror.dll" : "",
+    "res://bin/swiftSwiftOnoneSupport.dll" : "",
+    "res://bin/swiftWinSDK.dll" : "",
+    "res://bin/swift_Concurrency.dll" : "",
+    "res://bin/swift_Differentiation.dll" : "",
+    "res://bin/swift_RegexParser.dll" : "",
+    "res://bin/swift_StringProcessing.dll" : "",
+}
+windows.release = {
+    "res://bin/SwiftGodot.dll" : "",
+    "res://bin/BlocksRuntime.dll" : "",
+    "res://bin/dispatch.dll" : "",
+    "res://bin/Foundation.dll" : "",
+    "res://bin/FoundationNetworking.dll" : "",
+    "res://bin/FoundationXML.dll" : "",
+    "res://bin/swiftCore.dll" : "",
+    "res://bin/swiftCRT.dll" : "",
+    "res://bin/swiftDispatch.dll" : "",
+    "res://bin/swiftDistributed.dll" : "",
+    "res://bin/swiftObservation.dll" : "",
+    "res://bin/swiftRegexBuilder.dll" : "",
+    "res://bin/swiftRemoteMirror.dll" : "",
+    "res://bin/swiftSwiftOnoneSupport.dll" : "",
+    "res://bin/swiftWinSDK.dll" : "",
+    "res://bin/swift_Concurrency.dll" : "",
+    "res://bin/swift_Differentiation.dll" : "",
+    "res://bin/swift_RegexParser.dll" : "",
+    "res://bin/swift_StringProcessing.dll" : ""
+}

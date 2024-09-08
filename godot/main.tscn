@@ -14,7 +14,7 @@ size = Vector3(100, 1, 100)
 [node name="Main" type="Node3D"]
 
 [node name="MazeNode" parent="." instance=ExtResource("1_w1nkc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.792, 2.5, -6.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [node name="Floor" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_jp4ga")
@@ -26,7 +26,7 @@ shape = SubResource("BoxShape3D_7fsbh")
 mesh = SubResource("BoxMesh_jhvwu")
 
 [node name="Player" parent="." instance=ExtResource("1_7v4ub")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.8125, 0.857606, -21.335)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.45517, 0.844177, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.997299, -3.21049e-09, 0.0734474, -0.0734474, -4.35934e-08, 0.997299, 0, -1, -4.37114e-08, 10.1081, 29.068, 5.29892)
