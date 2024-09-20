@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://rdy1g2lwahdx"]
+[gd_scene load_steps=11 format=3 uid="uid://rdy1g2lwahdx"]
 
 [ext_resource type="PackedScene" uid="uid://cyyslgmala3aq" path="res://player.tscn" id="1_7v4ub"]
 [ext_resource type="PackedScene" uid="uid://cs4oc6nrt8mlb" path="res://maze.tscn" id="1_w1nkc"]
 [ext_resource type="PackedScene" uid="uid://bs3lhxj3gdyv3" path="res://computer.tscn" id="3_co847"]
+[ext_resource type="Texture2D" uid="uid://bvv7egky0gh34" path="res://Textures/Prototype/Green 3.png" id="4_7177w"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jp4ga"]
 
@@ -12,6 +13,16 @@ size = Vector3(100, 1, 100)
 [sub_resource type="BoxMesh" id="BoxMesh_jhvwu"]
 size = Vector3(100, 1, 100)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_52as7"]
+albedo_texture = ExtResource("4_7177w")
+
+[sub_resource type="BoxMesh" id="BoxMesh_2c2ey"]
+material = SubResource("StandardMaterial3D_52as7")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kbq5o"]
+size = Vector3(0.5, 0.5, 0.5)
+
 [node name="Main" type="Node3D"]
 
 [node name="MazeNode" parent="." instance=ExtResource("1_w1nkc")]
@@ -19,6 +30,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.54
 
 [node name="Floor" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0544, 0, 0)
+collision_layer = 97
 physics_material_override = SubResource("PhysicsMaterial_jp4ga")
 metadata/_edit_group_ = true
 
@@ -29,14 +41,27 @@ shape = SubResource("BoxShape3D_7fsbh")
 mesh = SubResource("BoxMesh_jhvwu")
 
 [node name="Player" parent="." instance=ExtResource("1_7v4ub")]
-maxSpeed = 40.0
 acceleration = 15.0
 sprintAcceleration = 30.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4737, 0.844177, 0)
+collision_mask = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.997299, -3.21049e-09, 0.0734474, -0.0734474, -4.35934e-08, 0.997299, 0, -1, -4.37115e-08, 10.1081, 24.2463, 5.29892)
+transform = Transform3D(0.904463, 1.86452e-08, -0.426553, 0.426553, -3.95354e-08, 0.904463, -2.21445e-16, -1, -4.37115e-08, -33.5368, 35.2546, 5.29892)
 shadow_enabled = true
 
 [node name="Node3D" parent="." instance=ExtResource("3_co847")]
 transform = Transform3D(0.116411, 0, 0.993201, 0, 1, 0, -0.993201, 0, 0.116411, -32.0443, 1.1915, 0)
+
+[node name="Prop" type="Prop" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.3705, 1.87456, 8.64932)
+collision_layer = 8
+collision_mask = 7
+contact_monitor = true
+max_contacts_reported = 10
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Prop"]
+mesh = SubResource("BoxMesh_2c2ey")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Prop"]
+shape = SubResource("BoxShape3D_kbq5o")

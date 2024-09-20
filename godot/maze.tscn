@@ -18,6 +18,7 @@ size = Vector3(2, 5, 2)
 
 [node name="PrototypeWall" type="StaticBody3D" parent="."]
 visible = false
+collision_layer = 97
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PrototypeWall"]
 mesh = SubResource("BoxMesh_2gagl")

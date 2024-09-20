@@ -39,12 +39,28 @@ public class Player: CharacterBody3D {
     @SceneTree(path: "Piviot")
     var piviot: Node3D?
     
+    @SceneTree(path: "Piviot/Hand")
+    var hand: Marker3D?
+    
     @SceneTree(path: "Piviot/Flashlight")
     var flashlight: SpotLight3D?
+    
+    @SceneTree(path: "Piviot/Crosshair")
+    var crosshairRayCast: RayCast3D?
+    
+    var prop: Prop?
     
     public override func _ready() {
         super._ready()
         Input.mouseMode = .captured
+    }
+    
+    public override func _process(delta: Double) {
+        // This is to avoid ray cast to detect another object when there
+        // is already an object on hand.
+        crosshairRayCast?.enabled = prop == nil
+        
+        maybeGrabProp()
     }
     
     public override func _physicsProcess(delta: Double) {
@@ -62,22 +78,22 @@ public class Player: CharacterBody3D {
         
         var inputVector = Vector2()
         
-        if Input.isActionPressed(action: "move_forward") {
+        if Input.isActionPressed(action: .forward) {
             inputVector.y += 1
         }
-        if Input.isActionPressed(action: "move_back") {
+        if Input.isActionPressed(action: .backward) {
             inputVector.y -= 1
         }
-        if Input.isActionPressed(action: "move_left") {
+        if Input.isActionPressed(action: .left) {
             inputVector.x -= 1
         }
-        if Input.isActionPressed(action: "move_right") {
+        if Input.isActionPressed(action: .right) {
             inputVector.x += 1
         }
         
-        isSprinting = Input.isActionPressed(action: "sprint")
+        isSprinting = Input.isActionPressed(action: .sprint)
         
-        if Input.isActionJustPressed(action: "flashlight_toggle") {
+        if Input.isActionJustPressed(action: .flashlightToggle) {
             flashlight?.visible.toggle()
         }
         
@@ -86,12 +102,12 @@ public class Player: CharacterBody3D {
         direction = (cameraTransform.basis * Vector3(x: inputVector.x, y: 0, z: -inputVector.y)).normalized()
         
         if isOnFloor() {
-            if Input.isActionJustPressed(action: "move_jump") {
+            if Input.isActionJustPressed(action: .jump) {
                 moveVelocity.y = Float(jumpSpeed)
             }
         }
         
-        if Input.isActionJustPressed(action: "ui_cancel") {
+        if Input.isActionJustPressed(action: .uiCancel) {
             Input.mouseMode = if Input.mouseMode == .visible {
                  .captured
             } else {
@@ -135,6 +151,46 @@ public class Player: CharacterBody3D {
         var cameraRotation = piviot.rotationDegrees
         cameraRotation.x = (-50.0...35.0).clamp(cameraRotation.x)
         piviot.rotationDegrees = cameraRotation
+    }
+    
+    func maybeGrabProp() {
+        guard Input.isActionJustPressed(action: .interact) else {
+            return
+        }
+        
+        if let prop {
+            attach(object: nil)
+            return
+        }
+        
+        guard let crosshairRayCast else {
+            return
+        }
+        guard let hit = crosshairRayCast.getCollider() else {
+            return
+        }
+        
+        guard let object = hit as? Prop else {
+            return
+        }
+        
+        attach(object: object)
+        
+        if let prop, prop.propContainer != hand {
+            self.prop = nil
+        }
+    }
+    
+    func attach(object: Prop?) {
+        if prop == nil {
+            prop = object
+            object?.attach(causer: hand ?? self)
+            crosshairRayCast?.enabled.toggle()
+        } else {
+            prop?.detach()
+            prop = nil
+            crosshairRayCast?.enabled.toggle()
+        }
     }
 }
 
