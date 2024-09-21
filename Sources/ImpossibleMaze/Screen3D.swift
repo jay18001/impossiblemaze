@@ -6,6 +6,9 @@ public class Screen3D: Node3D {
     
     // Used for checking if the mouse is inside the Area3D.
     var isMouseInside = false
+    
+    var mouseWasCaptured = false
+    
     // The last processed input touch/mouse event. To calculate relative movement.
     var lastEventPos2D: Vector2?
     // The time of the last event in seconds since engine start.
@@ -38,12 +41,22 @@ public class Screen3D: Node3D {
     }
     
     func mouse_entered_area() {
+        if Input.mouseMode == .captured {
+            Input.mouseMode = .visible
+            mouseWasCaptured = true
+        }
+        
         isMouseInside = true
     }
     
     
     func mouse_exited_area() {
         isMouseInside = false
+        
+        if mouseWasCaptured {
+            Input.mouseMode = .captured
+            mouseWasCaptured = false
+        }
     }
     
     public override func _unhandledInput(event: InputEvent?) {
@@ -52,18 +65,10 @@ public class Screen3D: Node3D {
         // If the event is a mouse/touch event, then we can ignore it here, because it will be
         // handled via Physics Picking.
         switch event {
-        case is InputEventMouseButton: 
-            print("InputEventMouseButton")
-            return
-        case is InputEventMouseMotion: 
-            print("InputEventMouseMotion")
-            return
-        case is InputEventScreenDrag: 
-            print("InputEventScreenDrag")
-            return
-        case is InputEventScreenTouch: 
-            print("InputEventScreenTouch")
-            return
+        case is InputEventMouseButton: return
+        case is InputEventMouseMotion: return
+        case is InputEventScreenDrag: return
+        case is InputEventScreenTouch: return
         default: nodeViewport?.pushInput(event: event)
         }
     }
@@ -113,21 +118,21 @@ public class Screen3D: Node3D {
         }
         
         // Set the event's position and global position.
-        if event is InputEventMouse {
-            (event as! InputEventMouse).position = eventPos2D
-            (event as! InputEventMouse).globalPosition = eventPos2D
+        if let mouseEvent = event as? InputEventMouse {
+            mouseEvent.position = eventPos2D
+            mouseEvent.globalPosition = eventPos2D
         }
         
         // Calculate the relative event distance.
-        if event is InputEventMouseMotion/* || event is InputEventScreenDrag*/ {
+        if let event = event as? InputEventMouseMotion {
             // If there is not a stored previous position, then we'll assume there is no relative motion.
             if let lastEventPos2D {
                 let relative = eventPos2D - lastEventPos2D
-                (event as! InputEventMouseMotion).relative = relative
+                event.relative = relative
                 
-                (event as! InputEventMouseMotion).velocity =  Vector2(x: relative.x / (now - lastEventTime), y: relative.y / (now - lastEventTime))
+                event.velocity =  Vector2(x: relative.x / (now - lastEventTime), y: relative.y / (now - lastEventTime))
             } else {
-                (event as! InputEventMouseMotion).relative = Vector2(x: 0, y: 0)
+                event.relative = Vector2(x: 0, y: 0)
                 // If there is a stored previous position, then we'll calculate the relative position by subtracting
                 // the previous position from the new position. This will give us the distance the event traveled from prev_pos.
             }

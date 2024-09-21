@@ -6,7 +6,8 @@ public class Prop: RigidBody3D {
     
     // This controls how much it will turn if it bumps into something.
     // Change this to suit your needs.
-    let maxAngularDamp = 10.0
+    @Export
+    public var maxAngularDamp: Double = 10.0
     
     @Export
     public var gravity: Double = -24.8
@@ -20,6 +21,8 @@ public class Prop: RigidBody3D {
     public var mouseXSensitivity: Float = 0.1
     @Export()//(0.0, 1.0, 0.05)
     public var mouseYSensitivity: Float = 0.1
+    
+    #signal("did_detach")
     
     var propContainer: Node3D?
     
@@ -86,6 +89,7 @@ public class Prop: RigidBody3D {
         collisionMask = CollisionMask.detachMode
         propContainer = nil
         angularDamp = 0
+        emit(signal: Prop.didDetach)
     }
     
 }

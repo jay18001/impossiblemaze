@@ -1,5 +1,4 @@
 import Foundation
-
 import SwiftGodot
 
 @Godot(.gameplay)
@@ -47,6 +46,9 @@ public class Player: CharacterBody3D {
     
     @SceneTree(path: "Piviot/Crosshair")
     var crosshairRayCast: RayCast3D?
+    
+    @SceneTree(path: "Piviot/Camera/UI")
+    var interface: UserInterface?
     
     var prop: Prop?
     
@@ -154,31 +156,43 @@ public class Player: CharacterBody3D {
     }
     
     func maybeGrabProp() {
+        guard let crosshairRayCast else {
+            return
+        }
+        guard let hit = crosshairRayCast.getCollider(), let object = hit as? Prop else {
+            crosshairMiss()
+            return
+        }
+        
+        crosshairDidHit(prop: object)
+    }
+                                                    
+    func crosshairDidHit(prop: Prop) {
+
+        if self.prop == nil {
+            interface?.showInteraction()
+        }
+        
         guard Input.isActionJustPressed(action: .interact) else {
             return
         }
         
-        if let prop {
+        interface?.hideInteraction()
+        
+        if self.prop != nil {
             attach(object: nil)
             return
         }
         
-        guard let crosshairRayCast else {
-            return
-        }
-        guard let hit = crosshairRayCast.getCollider() else {
-            return
-        }
+        attach(object: prop)
         
-        guard let object = hit as? Prop else {
-            return
-        }
-        
-        attach(object: object)
-        
-        if let prop, prop.propContainer != hand {
+        if self.prop != nil, prop.propContainer != hand {
             self.prop = nil
         }
+    }
+    
+    func crosshairMiss() {
+        interface?.hideInteraction()
     }
     
     func attach(object: Prop?) {
@@ -186,11 +200,20 @@ public class Player: CharacterBody3D {
             prop = object
             object?.attach(causer: hand ?? self)
             crosshairRayCast?.enabled.toggle()
+            prop?.connect(signal: Prop.didDetach, to: self, method: "propDidDetach")
         } else {
+            prop?.disconnect(signal: Prop.didDetach.name, callable: .init(object: self, method: "propDidDetach"))
             prop?.detach()
             prop = nil
             crosshairRayCast?.enabled.toggle()
         }
+        interface?.hideInteraction()
+    }
+    
+    @Callable func propDidDetach() {
+        prop?.disconnect(signal: Prop.didDetach.name, callable: .init(object: self, method: "propDidDetach"))
+        self.prop = nil
+        crosshairRayCast?.enabled = true
     }
 }
 

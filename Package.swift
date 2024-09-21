@@ -18,8 +18,10 @@ let package = Package(
             targets: ["ImpossibleMaze"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/migueldeicaza/SwiftGodot", revision: "fe24cb01640c2d4d48c8555a71adfe346d9543cf"),
-        .package(url: "https://github.com/migueldeicaza/SwiftGodotKit", branch: "main")
+//        .package(url: "https://github.com/migueldeicaza/SwiftGodot", revision: "fe24cb01640c2d4d48c8555a71adfe346d9543cf"),
+//        .package(url: "https://github.com/migueldeicaza/SwiftGodotKit", branch: "main"),
+        .package(path: "/Users/justin/Development/SwiftGodot"),
+        .package(path: "/Users/justin/Development/SwiftGodotKit"),
     ],
     targets: [
         .executableTarget(

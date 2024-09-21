@@ -7,7 +7,7 @@ radius = 0.25
 radius = 0.25
 
 [node name="Player" type="Player"]
-acceleration = 5.0
+mouseSensitivity = 0.1
 collision_mask = 33
 velocity = Vector3(0, -0.413333, 0)
 
@@ -19,6 +19,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16438, 0)
 visible = false
 
 [node name="Camera" type="Camera3D" parent="Piviot"]
+
+[node name="UI" type="UserInterface" parent="Piviot/Camera"]
+offset_left = 556.0
+offset_top = 312.5
+offset_right = 596.0
+offset_bottom = 352.5
+
+[node name="InteractionLabel" type="Label" parent="Piviot/Camera/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Pickup {E}"
 
 [node name="Hand" type="Marker3D" parent="Piviot"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.142978, -1.21325)
